@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="narthex_crm.sql" id="Project-99" database="MySql" >
+	<schema name="nathex_crm_db" options="" >
+		<table name="client" spec="" >
+			<column name="id" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="email_address" type="varchar" length="127" jt="12" mandatory="y" />
+			<column name="creation_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="permission_scope" type="enum" jt="12" mandatory="y" >
+				<defo><![CDATA['admin']]></defo>
+				<enumeration><![CDATA['admin']]></enumeration>
+			</column>
+			<column name="last_login_date" type="timestamp" jt="93" />
+			<column name="active" type="bit" jt="-7" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+			</column>
+			<index name="Pk_client" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="donation" prior="tbl" >
+			<column name="id" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="household_id" type="int" jt="4" mandatory="y" />
+			<column name="donation_campaign_id" type="int" jt="4" />
+			<column name="date" type="date" jt="91" mandatory="y" >
+				<defo><![CDATA[(CURRENT_DATE)]]></defo>
+				<comment><![CDATA[UTC date]]></comment>
+			</column>
+			<column name="amount" type="decimal" length="9" decimal="2" jt="3" mandatory="y" />
+			<column name="notes" type="text" length="600" jt="-1" />
+			<column name="created_by" type="int" jt="4" mandatory="y" />
+			<column name="creation_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_by" type="int" jt="4" mandatory="y" />
+			<column name="modification_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="archived" type="bit" jt="-7" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<index name="pk_donation_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_donation_amount" unique="NORMAL" >
+				<column name="amount" />
+			</index>
+			<index name="idx_donation_date" unique="NORMAL" >
+				<column name="date" />
+			</index>
+			<fk name="fk_donation_household" to_schema="nathex_crm_db" to_table="household" delete_action="cascade" >
+				<fk_column name="household_id" pk="id" />
+			</fk>
+			<fk name="fk_donation_client_creation" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="created_by" pk="id" />
+			</fk>
+			<fk name="fk_donation_client_modification" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="modified_by" pk="id" />
+			</fk>
+			<fk name="fk_donation_donation_campaign" to_schema="nathex_crm_db" to_table="donation_campaign" >
+				<fk_column name="donation_campaign_id" pk="id" />
+			</fk>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="donation_campaign" prior="tbl" >
+			<column name="id" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="name" type="varchar" length="63" jt="12" mandatory="y" />
+			<column name="notes" type="text" length="600" jt="-1" />
+			<column name="start_date" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[UTC date]]></comment>
+			</column>
+			<column name="end_date" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[UTC date]]></comment>
+			</column>
+			<column name="created_by" type="int" jt="4" mandatory="y" />
+			<column name="creation_timestamp" type="timestamp" length="12" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_by" type="int" jt="4" mandatory="y" />
+			<column name="modification_timestamp" type="timestamp" length="12" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="archived" type="bit" jt="-7" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<index name="pk_donation_campaign_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_donation_campaign_time_range" unique="NORMAL" >
+				<column name="start_date" />
+				<column name="end_date" />
+			</index>
+			<fk name="fk_donation_campaign_client_creation" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="created_by" pk="id" />
+			</fk>
+			<fk name="fk_donation_campaign_client_modification" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="modified_by" pk="id" />
+			</fk>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="event" spec="" >
+			<column name="id" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="name" type="varchar" length="63" jt="12" mandatory="y" />
+			<column name="date" prior="scheduled_date" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[UTC date]]></comment>
+			</column>
+			<column name="location" type="varchar" length="63" jt="12" />
+			<column name="created_by" type="int" jt="4" mandatory="y" />
+			<column name="creation_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_by" type="int" jt="4" mandatory="y" />
+			<column name="modification_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="archived" type="bit" jt="-7" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<index name="Pk_event" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_event_date" unique="NORMAL" >
+				<column name="date" />
+			</index>
+			<fk name="fk_event_client_created" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="created_by" pk="id" />
+			</fk>
+			<fk name="fk_event_client_modified" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="modified_by" pk="id" />
+			</fk>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="event_attendance" spec="" >
+			<column name="event_id" type="int" jt="4" mandatory="y" />
+			<column name="person_id" type="int" jt="4" mandatory="y" />
+			<column name="date_registered" type="date" jt="91" mandatory="y" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+				<comment><![CDATA[UTC date]]></comment>
+			</column>
+			<column name="attended" type="bit" jt="-7" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<column name="created_by" type="int" jt="4" mandatory="y" />
+			<column name="creation_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_by" type="int" jt="4" mandatory="y" />
+			<column name="modification_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<index name="pk_event_attendance" unique="PRIMARY_KEY" >
+				<column name="event_id" />
+				<column name="person_id" />
+			</index>
+			<fk name="fk_event_attendance_event" to_schema="nathex_crm_db" to_table="event" delete_action="cascade" >
+				<fk_column name="event_id" pk="id" />
+			</fk>
+			<fk name="fk_event_attendance_person" to_schema="nathex_crm_db" to_table="person" delete_action="cascade" >
+				<fk_column name="person_id" pk="id" />
+			</fk>
+			<fk name="fk_event_attendance_client_created" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="created_by" pk="id" />
+			</fk>
+			<fk name="fk_event_attendance_client_modified" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="modified_by" pk="id" />
+			</fk>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="household" spec="" >
+			<column name="id" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="head_id" prior="head" type="int" jt="4" mandatory="y" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="address_line_1" type="varchar" length="127" jt="12" mandatory="y" />
+			<column name="address_line_2" type="varchar" length="127" jt="12" />
+			<column name="city" type="varchar" length="63" jt="12" mandatory="y" />
+			<column name="state" type="varchar" length="63" jt="12" mandatory="y" />
+			<column name="postal_code" type="varchar" length="15" jt="12" mandatory="y" />
+			<column name="country" type="char" length="2" jt="1" mandatory="y" />
+			<column name="created_by" type="int" jt="4" mandatory="y" />
+			<column name="creation_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_by" type="int" jt="4" mandatory="y" />
+			<column name="modification_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="archived" type="bit" jt="-7" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<index name="Pk_household" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_household_country" unique="NORMAL" >
+				<column name="country" />
+			</index>
+			<index name="idx_household_name" unique="NORMAL" >
+				<column name="name" />
+			</index>
+			<fk name="fk_household_client_creation" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="created_by" pk="id" />
+			</fk>
+			<fk name="fk_household_client_modification" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="modified_by" pk="id" />
+			</fk>
+			<fk name="fk_household_person" to_schema="nathex_crm_db" to_table="person" >
+				<fk_column name="head_id" pk="id" />
+			</fk>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="milestone" spec="" >
+			<column name="id" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="person_id" type="int" jt="4" mandatory="y" />
+			<column name="type" type="enum" jt="12" mandatory="y" />
+			<column name="event_date" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[UTC date]]></comment>
+			</column>
+			<column name="notes" type="text" jt="-1" />
+			<column name="created_by" type="int" jt="4" mandatory="y" />
+			<column name="creation_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_by" type="int" jt="4" mandatory="y" />
+			<column name="modification_date" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="archived" type="bit" jt="-7" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<index name="Pk_milestone" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_milestone_date" unique="NORMAL" >
+				<column name="event_date" />
+			</index>
+			<fk name="fk_milestone_person" to_schema="nathex_crm_db" to_table="person" delete_action="cascade" >
+				<fk_column name="person_id" pk="id" />
+			</fk>
+			<fk name="fk_milestone_client_creation" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="created_by" pk="id" />
+			</fk>
+			<fk name="fk_milestone_client_modification" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="modified_by" pk="id" />
+			</fk>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="ministry" spec="" >
+			<column name="id" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="name" type="varchar" length="63" jt="12" mandatory="y" />
+			<column name="color" type="tinyint" jt="-6" mandatory="y" />
+			<column name="created_by" type="int" jt="4" mandatory="y" />
+			<column name="creation_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_by" type="int" jt="4" mandatory="y" />
+			<column name="modification_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="archived" type="bit" jt="-7" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<index name="Pk_ministry" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_ministry_client_created" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="created_by" pk="id" />
+			</fk>
+			<fk name="fk_ministry_client_modified" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="modified_by" pk="id" />
+			</fk>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="ministry_delegation" spec="" >
+			<column name="ministry_id" type="int" jt="4" mandatory="y" />
+			<column name="person_id" type="int" jt="4" mandatory="y" />
+			<column name="created_by" type="int" jt="4" mandatory="y" />
+			<column name="creation_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_by" type="int" jt="4" mandatory="y" />
+			<column name="modification_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<index name="pk_ministry_delegation" unique="PRIMARY_KEY" >
+				<column name="ministry_id" />
+				<column name="person_id" />
+			</index>
+			<fk name="fk_ministry_delegation_ministry" to_schema="nathex_crm_db" to_table="ministry" delete_action="cascade" >
+				<fk_column name="ministry_id" pk="id" />
+			</fk>
+			<fk name="fk_ministry_delegation_person" to_schema="nathex_crm_db" to_table="person" delete_action="cascade" >
+				<fk_column name="person_id" pk="id" />
+			</fk>
+			<fk name="fk_ministry_delegation_client_created" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="created_by" pk="id" />
+			</fk>
+			<fk name="fk_ministry_delegation_client_modified" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="modified_by" pk="id" />
+			</fk>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="person" spec="" >
+			<column name="id" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="household_id" type="int" jt="4" mandatory="y" />
+			<column name="first_name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="last_name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="gender" type="enum" jt="12" mandatory="y" >
+				<enumeration><![CDATA['male', 'female']]></enumeration>
+			</column>
+			<column name="age" type="int" jt="4" mandatory="y" />
+			<column name="primary_phone_number" type="varchar" length="31" jt="12" />
+			<column name="email_address" type="varchar" length="127" jt="12" />
+			<column name="birth_date" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[UTC date]]></comment>
+			</column>
+			<column name="title" type="varchar" length="63" jt="12" />
+			<column name="created_by" type="int" jt="4" mandatory="y" />
+			<column name="creation_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_by" type="int" jt="4" mandatory="y" />
+			<column name="modification_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="archived" type="bit" jt="-7" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<index name="Pk_person" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_person_name" unique="NORMAL" >
+				<column name="first_name" />
+				<column name="last_name" />
+			</index>
+			<index name="idx_person_birth_date" unique="NORMAL" >
+				<column name="birth_date" />
+			</index>
+			<fk name="fk_person_client_created" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="created_by" pk="id" />
+			</fk>
+			<fk name="fk_person_client_modified" to_schema="nathex_crm_db" to_table="client" >
+				<fk_column name="modified_by" pk="id" />
+			</fk>
+			<fk name="fk_person_household" to_schema="nathex_crm_db" to_table="household" >
+				<fk_column name="household_id" pk="id" />
+			</fk>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="relationship" spec="" >
+			<column name="type" type="varchar" length="31" jt="12" mandatory="y" />
+			<column name="date_started" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[UTC date]]></comment>
+			</column>
+			<column name="first_person_id" type="int" jt="4" mandatory="y" />
+			<column name="second_person_id" type="int" jt="4" mandatory="y" />
+			<index name="pk_relationship" unique="PRIMARY_KEY" >
+				<column name="first_person_id" />
+				<column name="second_person_id" />
+			</index>
+			<fk name="fk_relationship_first_person" to_schema="nathex_crm_db" to_table="person" delete_action="cascade" >
+				<fk_column name="first_person_id" pk="id" />
+			</fk>
+			<fk name="fk_relationship_second_person" to_schema="nathex_crm_db" to_table="person" delete_action="cascade" >
+				<fk_column name="second_person_id" pk="id" />
+			</fk>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+	</schema>
+	<connector name="MySql" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-8.0.23.jar" driver_desc="Standard" host="localhost" port="3306" user="root" passwd="YWRtaW5wYXNz" />
+	<layout name="Layout" id="Layout-1c01" show_column_type="y" show_page_borders="y" show_relation="columns" >
+		<entity schema="nathex_crm_db" name="client" color="BED3F4" x="304" y="48" />
+		<entity schema="nathex_crm_db" name="donation" color="C1D8EE" x="1200" y="832" />
+		<entity schema="nathex_crm_db" name="donation_campaign" color="C1D8EE" x="1728" y="864" />
+		<entity schema="nathex_crm_db" name="event" color="BED3F4" x="1552" y="384" />
+		<entity schema="nathex_crm_db" name="event_attendance" color="BED3F4" x="1152" y="400" />
+		<entity schema="nathex_crm_db" name="household" color="BED3F4" x="800" y="816" />
+		<entity schema="nathex_crm_db" name="milestone" color="BED3F4" x="416" y="624" />
+		<entity schema="nathex_crm_db" name="ministry" color="BED3F4" x="48" y="384" />
+		<entity schema="nathex_crm_db" name="ministry_delegation" color="BED3F4" x="400" y="400" />
+		<entity schema="nathex_crm_db" name="person" color="BED3F4" x="768" y="352" />
+		<entity schema="nathex_crm_db" name="relationship" color="BED3F4" x="848" y="64" />
+		<script name="SQL_Editor" id="Editor-1831" language="SQL" >
+			<string><![CDATA[CREATE TABLE nathex_crm_db.donation ( 
+	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
+	household_id         int  NOT NULL    ,
+	donation_campaign_id int      ,
+	`date`               date  NOT NULL DEFAULT CURRENT_DATE   ,
+	amount               decimal(9,2)  NOT NULL    ,
+	notes                text      ,
+	created_by           int  NOT NULL    ,
+	creation_timestamp   timestamp(12)  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	modified_by          int  NOT NULL    ,
+	modification_timestamp timestamp(12)  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	archived             bit  NOT NULL DEFAULT 0   
+ ) engine=InnoDB]]></string>
+		</script>
+		<script name="narthex_crm.sql" id="Editor-20e8" language="SQL" >
+			<string><![CDATA[CREATE SCHEMA nathex_crm_db;
+
+CREATE TABLE nathex_crm_db.client ( 
+	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
+	email_address        varchar(127)  NOT NULL    ,
+	creation_timestamp        timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	permission_scope     enum('default', 'admin')  NOT NULL DEFAULT 'default'   ,
+	last_login_date      timestamp      ,
+	active               bit  NOT NULL DEFAULT 1   
+ ) engine=InnoDB;
+
+CREATE TABLE nathex_crm_db.event ( 
+	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
+	name                 varchar(63)  NOT NULL    ,
+	scheduled_date       date  NOT NULL    ,
+	location             varchar(63)      ,
+	created_by           int  NOT NULL    ,
+	creation_timestamp        timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	modified_by          int  NOT NULL    ,
+	modification_timestamp    timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	archived             bit  NOT NULL DEFAULT 0   
+ ) engine=InnoDB;
+
+CREATE TABLE nathex_crm_db.household ( 
+	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
+	name                 varchar(100)  NOT NULL    ,
+	address_line_1       varchar(127)  NOT NULL    ,
+	address_line_2       varchar(127)      ,
+	city                 varchar(63)  NOT NULL    ,
+	state                varchar(63)  NOT NULL    ,
+	postal_code          varchar(15)  NOT NULL    ,
+	country              char(2)  NOT NULL    ,
+	created_by           int  NOT NULL    ,
+	creation_timestamp        timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	modified_by          int  NOT NULL    ,
+	modification_timestamp    timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	archived             bit  NOT NULL DEFAULT 0   
+ ) engine=InnoDB;
+
+CREATE TABLE nathex_crm_db.ministry ( 
+	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
+	name                 varchar(63)  NOT NULL    ,
+	color                tinyint UNSIGNED NOT NULL    ,
+	created_by           int  NOT NULL    ,
+	creation_timestamp        timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	modified_by          int  NOT NULL    ,
+	modification_timestamp    timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	archived             bit  NOT NULL DEFAULT 0   
+ ) engine=InnoDB;
+
+CREATE TABLE nathex_crm_db.person ( 
+	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
+	household_id         int  NOT NULL    ,
+	first_name           varchar(100)  NOT NULL    ,
+	last_name            varchar(100)  NOT NULL    ,
+	gender               enum('Male', 'Female')  NOT NULL    ,
+	age                  int  NOT NULL    ,
+	primary_phone_number varchar(31)      ,
+	email_address        varchar(127)      ,
+	birth_date           date  NOT NULL    ,
+	title                varchar(63)      ,
+	created_by           int  NOT NULL    ,
+	creation_timestamp        timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	modified_by          int  NOT NULL    ,
+	modification_timestamp    timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	archived             bit  NOT NULL DEFAULT 0   
+ ) engine=InnoDB;
+
+CREATE TABLE nathex_crm_db.relationship ( 
+	`type`               varchar(31)  NOT NULL    ,
+	date_started         date  NOT NULL    ,
+	first_person_id      int  NOT NULL    ,
+	second_person_id     int  NOT NULL    ,
+	CONSTRAINT pk_relationship PRIMARY KEY ( first_person_id, second_person_id )
+ ) engine=InnoDB;
+
+CREATE TABLE nathex_crm_db.event_attendance ( 
+	event_id             int  NOT NULL    ,
+	person_id            int  NOT NULL    ,
+	date_registered      date  NOT NULL DEFAULT CURRENT_DATE   ,
+	attended             bit  NOT NULL DEFAULT 0   ,
+	created_by           int  NOT NULL    ,
+	creation_timestamp        timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	modified_by          int  NOT NULL    ,
+	modification_timestamp    timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	CONSTRAINT pk_event_attendance PRIMARY KEY ( event_id, person_id )
+ ) engine=InnoDB;
+
+CREATE TABLE nathex_crm_db.milestone ( 
+	id                   int  NOT NULL    PRIMARY KEY,
+	person_id            int  NOT NULL    ,
+	`type`               enum('baptism', 'marriage')  NOT NULL    ,
+	event_date           date  NOT NULL    ,
+	notes                text      ,
+	created_by           int  NOT NULL    ,
+	creation_timestamp        timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	modified_by          int  NOT NULL    ,
+	modification_date    timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	archived             bit  NOT NULL DEFAULT 0   
+ ) engine=InnoDB;
+
+CREATE TABLE nathex_crm_db.ministry_delegation ( 
+	ministry_id          int  NOT NULL    ,
+	person_id            int  NOT NULL    ,
+	created_by           int  NOT NULL    ,
+	creation_timestamp        timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	modified_by          int  NOT NULL    ,
+	modification_timestamp    timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
+	CONSTRAINT pk_ministry_delegation PRIMARY KEY ( ministry_id, person_id )
+ ) engine=InnoDB;
+
+ALTER TABLE nathex_crm_db.event ADD CONSTRAINT fk_event_client_created FOREIGN KEY ( created_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.event ADD CONSTRAINT fk_event_client_modified FOREIGN KEY ( modified_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.event_attendance ADD CONSTRAINT fk_event_attendance_event FOREIGN KEY ( event_id ) REFERENCES nathex_crm_db.event( id ) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.event_attendance ADD CONSTRAINT fk_event_attendance_person FOREIGN KEY ( person_id ) REFERENCES nathex_crm_db.person( id ) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.event_attendance ADD CONSTRAINT fk_event_attendance_client_created FOREIGN KEY ( created_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.event_attendance ADD CONSTRAINT fk_event_attendance_client_modified FOREIGN KEY ( modified_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.household ADD CONSTRAINT fk_household_client_creation FOREIGN KEY ( created_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.household ADD CONSTRAINT fk_household_client_modification FOREIGN KEY ( modified_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.milestone ADD CONSTRAINT fk_milestone_person FOREIGN KEY ( person_id ) REFERENCES nathex_crm_db.person( id ) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.milestone ADD CONSTRAINT fk_milestone_client_creation FOREIGN KEY ( created_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.milestone ADD CONSTRAINT fk_milestone_client_modification FOREIGN KEY ( modified_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.ministry ADD CONSTRAINT fk_ministry_client_created FOREIGN KEY ( created_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.ministry ADD CONSTRAINT fk_ministry_client_modified FOREIGN KEY ( modified_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.ministry_delegation ADD CONSTRAINT fk_ministry_delegation_ministry FOREIGN KEY ( ministry_id ) REFERENCES nathex_crm_db.ministry( id ) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.ministry_delegation ADD CONSTRAINT fk_ministry_delegation_person FOREIGN KEY ( person_id ) REFERENCES nathex_crm_db.person( id ) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.ministry_delegation ADD CONSTRAINT fk_ministry_delegation_client_created FOREIGN KEY ( created_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.ministry_delegation ADD CONSTRAINT fk_ministry_delegation_client_modified FOREIGN KEY ( modified_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.person ADD CONSTRAINT fk_person_client_created FOREIGN KEY ( created_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.person ADD CONSTRAINT fk_person_client_modified FOREIGN KEY ( modified_by ) REFERENCES nathex_crm_db.client( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.person ADD CONSTRAINT fk_person_household FOREIGN KEY ( household_id ) REFERENCES nathex_crm_db.household( id ) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.relationship ADD CONSTRAINT fk_relationship_first_person FOREIGN KEY ( first_person_id ) REFERENCES nathex_crm_db.person( id ) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+ALTER TABLE nathex_crm_db.relationship ADD CONSTRAINT fk_relationship_second_person FOREIGN KEY ( second_person_id ) REFERENCES nathex_crm_db.person( id ) ON DELETE CASCADE ON UPDATE NO ACTION;]]></string>
+		</script>
+	</layout>
+</project>

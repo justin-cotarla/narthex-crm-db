@@ -1,0 +1,15 @@
+version : "3.8"
+services:
+  narthex-crm-db:
+    build: .
+    container_name: narthex-crm-db
+    command: --default-authentication-plugin=mysql_native_password
+    env_file:
+      - .env
+      - .private.env
+    volumes:
+    - mysql:/var/lib/mysql/
+    ports:
+    - "3306:3306"
+volumes:
+  mysql:
