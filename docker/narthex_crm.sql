@@ -1,6 +1,6 @@
 CREATE TABLE narthex_crm_db.client ( 
 	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
-	email_address        varchar(127)  NOT NULL    ,
+	email_address        varchar(127)  NOT NULL UNIQUE    ,
 	creation_timestamp   timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
 	permission_scope     enum('admin')  NOT NULL	,
 	last_login_timestamp      timestamp      ,
