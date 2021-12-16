@@ -3,8 +3,9 @@ CREATE TABLE narthex_crm_db.client (
 	email_address        varchar(127)  NOT NULL    ,
 	creation_timestamp   timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
 	permission_scope     enum('admin')  NOT NULL	,
-	last_login_date      timestamp      ,
-	active               bit  NOT NULL DEFAULT 1   
+	last_login_timestamp      timestamp      ,
+	active               bit  NOT NULL DEFAULT 1   ,
+	pass_hash            char(246) NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE narthex_crm_db.donation_campaign ( 
