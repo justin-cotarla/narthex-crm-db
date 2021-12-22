@@ -46,7 +46,7 @@ ALTER TABLE narthex_crm_db.event MODIFY `date` date  NOT NULL   COMMENT 'UTC dat
 CREATE TABLE narthex_crm_db.ministry ( 
 	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
 	name                 varchar(63)  NOT NULL    ,
-	color                tinyint  NOT NULL    ,
+	color                mediumint UNSIGNED NOT NULL    ,
 	created_by           int  NOT NULL    ,
 	creation_timestamp   timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP   ,
 	modified_by          int  NOT NULL    ,
