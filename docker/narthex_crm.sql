@@ -142,7 +142,6 @@ CREATE TABLE narthex_crm_db.person (
 	first_name           varchar(100)  NOT NULL    ,
 	last_name            varchar(100)  NOT NULL    ,
 	gender               enum('male', 'female')  NOT NULL    ,
-	age                  int  NOT NULL    ,
 	primary_phone_number varchar(31)      ,
 	email_address        varchar(127)      ,
 	birth_date           date  NOT NULL    ,
