@@ -138,7 +138,7 @@ CREATE TABLE narthex_crm_db.ministry_delegation (
 
 CREATE TABLE narthex_crm_db.person ( 
 	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
-	household_id         int  NOT NULL,
+	household_id         int,
 	first_name           varchar(100)  NOT NULL,
 	last_name            varchar(100)  NOT NULL,
 	gender               enum('male', 'female')  NOT NULL,
