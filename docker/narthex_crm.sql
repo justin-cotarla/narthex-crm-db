@@ -90,7 +90,7 @@ ALTER TABLE narthex_crm_db.event_attendance MODIFY date_registered date  NOT NUL
 
 CREATE TABLE narthex_crm_db.household ( 
 	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
-	head_id              int  NOT NULL,
+	head_id              int,
 	name                 varchar(100)  NOT NULL,
 	address_line_1       varchar(127)  NOT NULL,
 	address_line_2       varchar(127),
@@ -138,7 +138,7 @@ CREATE TABLE narthex_crm_db.ministry_delegation (
 
 CREATE TABLE narthex_crm_db.person ( 
 	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
-	household_id         int,
+	household_id         int NOT NULL,
 	first_name           varchar(100)  NOT NULL,
 	last_name            varchar(100)  NOT NULL,
 	gender               enum('male', 'female')  NOT NULL,
