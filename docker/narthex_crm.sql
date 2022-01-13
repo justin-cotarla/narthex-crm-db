@@ -39,7 +39,7 @@ CREATE TABLE narthex_crm_db.event (
 	archived             bit  NOT NULL DEFAULT 0   
  ) engine=InnoDB;
 
-CREATE INDEX idx_event_date ON narthex_crm_db.event ( `date` );
+CREATE INDEX idx_date ON narthex_crm_db.event ( `date` );
 
 ALTER TABLE narthex_crm_db.event MODIFY `date` date  NOT NULL   COMMENT 'UTC date';
 
@@ -112,19 +112,19 @@ CREATE INDEX idx_household_name ON narthex_crm_db.household ( name );
 CREATE TABLE narthex_crm_db.milestone ( 
 	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
 	person_id            int  NOT NULL,
-	`type`               enum('baptism', 'marriage')  NOT NULL,
-	event_date           date  NOT NULL,
+	`type`               enum('catechumenate', 'baptism', 'marriage', 'ordination')  NOT NULL,
+	`date`           date  NOT NULL,
 	notes                text,
 	created_by           int  NOT NULL,
 	creation_timestamp   timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	modified_by          int  NOT NULL,
-	modification_date    timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	modification_timestamp    timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	archived             bit  NOT NULL DEFAULT 0   
  ) engine=InnoDB;
 
-CREATE INDEX idx_milestone_date ON narthex_crm_db.milestone ( event_date );
+CREATE INDEX idx_milestone_date ON narthex_crm_db.milestone ( `date` );
 
-ALTER TABLE narthex_crm_db.milestone MODIFY event_date date  NOT NULL   COMMENT 'UTC date';
+ALTER TABLE narthex_crm_db.milestone MODIFY `date` date  NOT NULL   COMMENT 'UTC date';
 
 CREATE TABLE narthex_crm_db.ministry_delegation ( 
 	ministry_id          int  NOT NULL,
