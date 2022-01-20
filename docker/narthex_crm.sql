@@ -30,7 +30,7 @@ ALTER TABLE narthex_crm_db.donation_campaign MODIFY end_date date  NOT NULL   CO
 CREATE TABLE narthex_crm_db.event ( 
 	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
 	name                 varchar(63)  NOT NULL,
-	`date`               date  NOT NULL,
+	datetime             datetime  NOT NULL,
 	location             varchar(63),
 	created_by           int  NOT NULL,
 	creation_timestamp   timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -39,9 +39,7 @@ CREATE TABLE narthex_crm_db.event (
 	archived             bit  NOT NULL DEFAULT 0   
  ) engine=InnoDB;
 
-CREATE INDEX idx_date ON narthex_crm_db.event ( `date` );
-
-ALTER TABLE narthex_crm_db.event MODIFY `date` date  NOT NULL   COMMENT 'UTC date';
+CREATE INDEX idx_date ON narthex_crm_db.event ( datetime );
 
 CREATE TABLE narthex_crm_db.ministry ( 
 	id                   int  NOT NULL  AUTO_INCREMENT  PRIMARY KEY,

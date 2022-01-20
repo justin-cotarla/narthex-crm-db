@@ -33,7 +33,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Conceptual Model"
     },
     {
       "type": "rectangle",
@@ -89,7 +89,7 @@
       "textAlign": "center",
       "verticalAlign": "middle",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Household"
     },
     {
       "type": "rectangle",
@@ -145,7 +145,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Person"
     },
     {
       "type": "line",
@@ -396,7 +396,7 @@
       "textAlign": "center",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Donation"
     },
     {
       "type": "line",
@@ -671,7 +671,7 @@
       "textAlign": "center",
       "verticalAlign": "middle",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Campaign"
     },
     {
       "type": "line",
@@ -931,7 +931,7 @@
       "textAlign": "center",
       "verticalAlign": "middle",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Events"
     },
     {
       "type": "text",
@@ -963,7 +963,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "composed of"
     },
     {
       "type": "text",
@@ -995,7 +995,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "contributes"
     },
     {
       "type": "text",
@@ -1027,7 +1027,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "fund"
     },
     {
       "type": "line",
@@ -1302,7 +1302,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "attended by"
     },
     {
       "type": "rectangle",
@@ -1689,7 +1689,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Person"
     },
     {
       "type": "line",
@@ -2113,7 +2113,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "is related to"
     },
     {
       "type": "rectangle",
@@ -2169,7 +2169,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Relationship"
     },
     {
       "type": "line",
@@ -2240,7 +2240,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "- type\n- date"
     },
     {
       "type": "line",
@@ -2515,12 +2515,12 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Event"
     },
     {
       "type": "text",
-      "version": 527,
-      "versionNonce": 1352798599,
+      "version": 532,
+      "versionNonce": 1106851797,
       "isDeleted": false,
       "id": "jVFcDaORcIsULpDr3F97k",
       "fillStyle": "hachure",
@@ -2533,21 +2533,21 @@
       "y": 194.5659576055549,
       "strokeColor": "#000000",
       "backgroundColor": "transparent",
-      "width": 94,
+      "width": 104,
       "height": 75,
       "seed": 652929383,
       "groupIds": [],
       "strokeSharpness": "sharp",
       "boundElements": [],
-      "updated": 1641609331219,
+      "updated": 1642655050673,
       "fontSize": 20,
       "fontFamily": 1,
-      "text": "- name\n- date\n- location",
+      "text": "- name\n- datetime\n- location",
       "baseline": 68,
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "- name\n- datetime\n- location"
     },
     {
       "type": "rectangle",
@@ -2642,7 +2642,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Event Attendance"
     },
     {
       "type": "text",
@@ -2674,7 +2674,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "- registered\n- attended"
     },
     {
       "type": "line",
@@ -3811,7 +3811,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "- name\n- color"
     },
     {
       "type": "line",
@@ -3945,7 +3945,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Household"
     },
     {
       "type": "text",
@@ -4111,7 +4111,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Donation"
     },
     {
       "type": "line",
@@ -4362,7 +4362,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "- date\n- amount\n- notes"
     },
     {
       "type": "rectangle",
@@ -4457,7 +4457,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Campaign"
     },
     {
       "type": "text",
@@ -4725,7 +4725,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Logical Model"
     },
     {
       "type": "rectangle",
@@ -4781,7 +4781,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Milestones"
     },
     {
       "type": "line",
@@ -5095,7 +5095,7 @@
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": ""
+      "originalText": "Milestone"
     },
     {
       "type": "text",
